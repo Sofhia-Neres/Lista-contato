@@ -11,7 +11,8 @@ export default function AgendaApp() {
       const resposta = await axios.get('https://jsonplaceholder.typicode.com/users');
       const listaComAvatares = resposta.data.map((usuario) => ({
         ...usuario,
-        imagem: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 70) + 1}`,
+        // Imagem usando DiceBear Avatars, que cria avatares únicos baseados no nome
+        imagem: `https://avatars.dicebear.com/api/avataaars/${encodeURIComponent(usuario.username)}.png?background=%23${Math.floor(Math.random()*16777215).toString(16)}`,
       }));
       setPessoas(listaComAvatares);
     } catch (erro) {
@@ -37,9 +38,9 @@ export default function AgendaApp() {
 
   return (
     <View style={estilos.tela}>
-      <Text style={estilos.titulo}>Agenda de Pessoas</Text>
+      <Text style={estilos.titulo}>Minha Agenda Colorida</Text>
       {carregando ? (
-        <ActivityIndicator size="large" color="#007bff" />
+        <ActivityIndicator size="large" color="#ff6347" />
       ) : (
         <FlatList
           data={pessoas}
@@ -55,49 +56,61 @@ export default function AgendaApp() {
 const estilos = StyleSheet.create({
   tela: {
     flex: 1,
-    backgroundColor: '#1e1e1e',
-    paddingTop: 50,
+    backgroundColor: '#121212',
+    paddingTop: 60,
+    paddingHorizontal: 20,
   },
   titulo: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    alignSelf: 'center',
-    color: '#FFFFFF',
+    fontSize: 32,
+    fontWeight: '900',
+    color: '#ff6347', // tomate vibrante
+    textAlign: 'center',
+    marginBottom: 30,
+    textTransform: 'uppercase',
+    letterSpacing: 2,
+    fontFamily: 'Courier New',
   },
   lista: {
-    paddingHorizontal: 16,
+    paddingBottom: 40,
   },
   cartao: {
     flexDirection: 'row',
-    backgroundColor: '#2c2c2c',
-    marginBottom: 12,
-    padding: 16,
-    borderRadius: 10,
+    backgroundColor: '#1e1e1e',
+    borderLeftWidth: 8,
+    borderLeftColor: '#ff6347',
+    marginBottom: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 18,
+    borderRadius: 16,
     alignItems: 'center',
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
+    elevation: 6,
+    shadowColor: '#ff6347',
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
   },
   foto: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginRight: 16,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    marginRight: 24,
+    borderWidth: 2,
+    borderColor: '#ff6347',
   },
   detalhes: {
     flex: 1,
   },
   nome: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#87CEFA',
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#fff',
+    marginBottom: 6,
+    fontFamily: 'Verdana',
   },
   contato: {
-    fontSize: 14,
-    color: '#B0C4DE',
-    marginTop: 4,
+    fontSize: 16,
+    color: '#bbb',
+    fontStyle: 'italic',
+    letterSpacing: 0.5,
   },
 });
